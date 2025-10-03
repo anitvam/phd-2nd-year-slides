@@ -1,0 +1,394 @@
+<!DOCTYPE html><html lang="en"><head>
+	<meta name="generator" content="Hugo 0.148.1">
+    <meta charset="utf-8">
+<title>Overview on my research area</title>
+
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><link rel="stylesheet" href="/phd-2nd-year-slides/reveal-js/dist/reset.css">
+<link rel="stylesheet" href="/phd-2nd-year-slides/reveal-js/dist/reveal.css">
+  <link rel="stylesheet" href="/phd-2nd-year-slides/css/custom-theme.min.529d9b3a09a281d7439d7e11e9cec1b7431220ba5232ba8768a0206b9230dda2.css" id="theme"><link rel="stylesheet" href="/phd-2nd-year-slides/highlight-js/solarized-dark.min.css">
+<link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
+<link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Oxygen Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu Mono" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+<script src="https://kit.fontawesome.com/81ac037be0.js" crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+    
+    <div class="reveal">
+      <div class="slides">
+  
+
+    <section><h1 id="engineering-robust-software-in-the-internet-of-industrial-things">Engineering robust software in the Internet of Industrial Things</h1>
+<p><em>Martina Baiardi</em> <br>
+<small><a href="mailto:m.baiardi@unibo.it">m.baiardi@unibo.it</a></small></p>
+</section><section>
+<h2 id="context">Context</h2>
+<ul>
+<li>Introduction of <strong>Cyber-Physical Systems (CPSs)</strong> in manufacturing production process <span class="fa fa-arrow-right"> </span> <strong>Cyber-Physical Production Systems (CPPSs)</strong></li>
+<li>Additional challenges in software systems:
+<ul>
+<li>Increased software complexity</li>
+<li>Increasing heterogeneity of devices</li>
+<li>Data distribution in the <strong>Edge-Cloud Continuum</strong></li>
+<li>Robustness to faults (<strong>Self-Healing-Fault-Tolerant</strong> techniques)</li>
+<li>Predictive maintenance</li>
+<li>Role of AI and ML in optimizing manufacturing processes</li>
+</ul>
+</li>
+</ul>
+</section><section>
+
+<div class="multiCol "><div class="col col-50 "><h2 id="industrial-case-study">Industrial case study</h2>
+<ul>
+<li>
+<p>Active collaboration with <strong>SCM Group</strong>, a world leader in producing large woodworking machines.</p>
+</li>
+<li>
+<p>Managing hybrid <code>Linux</code> and <code>Windows</code> computing environments</p>
+</li>
+<li>
+<p>Software maintenance is a challenge due to manual configurations and third-party dependencies</p>
+</li>
+<li>
+<p>They need their software system capable to:</p>
+<ul>
+<li>autonomously update their software systems when newer updates are released</li>
+<li>finely control the operating system version</li>
+<li>automatic porting of configuration files between OS/software versions</li>
+<li>autonomously act in case of failures during this procedure</li>
+<li>avoid manual intervention for this process</li>
+<li>allow software to run on outdated hardware (manufacturing machines have longer lifecycle than software)</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="col col-50 text-center"><p><img src="images/cdl-accord.png" width="60%"><img src="images/output-yoda-cdl.png" width="30%/">
+<img src="images/sezionatrice_gabbiani.png" width="60%/"></p>
+</div>
+</div>
+</section><section>
+<h1 id="challenges-in-this-case-study">Challenges in this case study</h1>
+<ul>
+<li>
+<p><strong>Deployment</strong>: Managing long-lived industrial hardware while keeping software updated.
+Development process is supported by modern techniques (DevOps), but no general tool for deployment.
+The deployment process may fails, thus a <em>rollback</em> procedure that bring the machine back to the latest working version is required.</p>
+</li>
+<li>
+<p><strong>Heterogeneity</strong>: Handling diverse hardware and software environments across different factories.
+Manufacturing software systems must run for a long time, increasing risk that deployment may fail.</p>
+</li>
+<li>
+<p><strong>Dependencies</strong>: Ensuring compatibility between</p>
+<ul>
+<li>software versions</li>
+<li>software and operating system</li>
+<li>software and dependencies (can be <em>ranges</em> of compatibilities)</li>
+</ul>
+</li>
+<li>
+<p><strong>Critical Environment</strong>: Minimizing downtime and maximize reliability in production environments</p>
+<ul>
+<li><em>dependability</em> concerns (availability, reliability, maintainability, safety)</li>
+<li><em>security</em></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h3 id="goal">Goal</h3>
+<p><em>Developing autonomous, self-updating,</em>
+<em>and fault-tolerant manufacturing software systems</em></p>
+<br>
+<h3 id="approach">Approach</h3>
+<p>We approach the problem from two complementary directions:</p>
+<ol>
+<li>
+<p><em>Top-down</em>: Enhancing state-of-the-art Self-Adaptive Self-Organizing (SASO) systems for adoption in industrial software</p>
+</li>
+<li>
+<p><em>Bottom-up</em>: Developing SASO systems to face practical problem in manufacturing</p>
+</li>
+</ol>
+</section><section>
+<h2 id="results-top-down">Results: TOP-DOWN</h2>
+
+<div class="multiCol "><div class="col col-50 mx-5"><ol>
+<li>
+<p>We compared SASO systems architectures, and we acknowledged that other research field approaches were not really disconnected from the SASO vision.
+We identified that <strong>BDI (Beliefs-Desires-Intentions) Multi-Agent Systems (MASs)</strong>, which literature never considered for SASO systems, were basically proposing the same model description with different aims.
+For this reason, we decided to investigate the feasibility of using BDI as a programming framework for SASO systems.</p>
+</li>
+<li>
+<p>Towards this end, we acknowledged that current BDI frameworks were not suitable for industrial adoption, because of their steep learning curve and lack of ergonomics.
+Therefore, we developed <strong>JaKtA</strong>, a BDI framework in Kotlin, which proposes a more ergonomic and developer-friendly approach for BDI programming.</p>
+</li>
+</ol>
+</div>
+<div class="col col-50 mx-5"><ol start="3">
+<li>
+<p>During the literature review of existing BDI frameworks, we identified that <strong>concurrency management</strong> was not treated with the required attention, and often hidden under the implementation of the frameworks.
+Concurrency is a crucial aspect when dealing with heterogeneous manufacturing systems particularly for the reliability requirement, therefore we classified <strong>concurrency models</strong> in BDI frameworks and highlighted the importance of controlling it.</p>
+</li>
+<li>
+<p>We identified that <strong>testing and validation</strong> of BDI systems before deployment was not sufficiently investigated in the literature.
+We proposed <strong>simulation-based validation</strong> for BDI MASs, enabling early detection of deployment issues.</p>
+</li>
+</ol>
+</div>
+</div>
+</section><section>
+<h3 id="collaborations">Collaborations</h3>
+<p>The top-down research gathered interest from the international community, leading to collaborations with other research groups.</p>
+
+<div class="multiCol "><div class="col col-50 text-center"><p><em>Collaboration with Ohio State University (USA)</em></p>
+<p>We propose a decentralized multi-drone coordination approach for wildlife video acquisition, leveraging distributed algorithms to enable autonomous drones to collaboratively plan and execute video capture missions in dynamic environments.</p>
+<img src="images/linproc.gif">
+</div>
+<div class="col col-50 text-center"><p><em>Collaboration with Mälardalen University (Sweden)</em></p>
+<p>We propose a field-based runtime replanning approach for multi-robot systems in unpredictable environments, leveraging aggregate programming to enable decentralized, adaptive decision-making even under unreliable network conditions.</p>
+<img src="images/replanning.gif">
+</div>
+<div class="col col-50 text-center"><p><em>Collaboration with Kiel University (Germany)</em></p>
+<p>We propose a self-adaptive communication strategy for maritime vessels using collective adaptive relay schemes, enhancing connectivity and data exchange in dynamic maritime environments.</p>
+<img src="images/simulation.gif">
+</div>
+</div>
+</section><section>
+<h3 id="results-bottom-up">RESULTS: BOTTOM-UP</h3>
+<ol>
+<li>Defined requirements and architecture for an <strong>autonomous update system</strong> for industrial machines.</li>
+<li>Designed and prototyped a <strong>rollback and downgrade mechanism</strong> to ensure system reliability during updates.</li>
+<li>Integrated <strong>containerization and virtualization</strong> to manage software dependencies and OS versions.</li>
+<li>Filed an Italian national patent for the update method for dependent software in machines.</li>
+</ol>
+</section><section>
+<h2 id="publications-overview">Publications overview</h2>
+<br>
+
+<div class="multiCol "><div class="col col-50 mx-5"><h4 id="12-publications"><em>12 publications</em></h4>
+<ul>
+<li>3 Short papers</li>
+<li>3 Main Track conference papers</li>
+<li>3 Workshop papers</li>
+<li>1 Tool paper</li>
+<li>1 Journal paper</li>
+<li>1 Book chapter</li>
+</ul>
+</div>
+<div class="col col-50 "><h4 id="6-accepted-papers-not-yet-published"><em>6 accepted papers (not yet published)</em></h4>
+<ul>
+<li>3 Main Track conference papers</li>
+<li>2 Workshop papers</li>
+<li>1 Short conference paper</li>
+</ul>
+</div>
+<div class="col col-50 "><h4 id="1-journal-paper-under-review"><em>1 Journal paper under review</em></h4>
+<br>
+<h4 id="1-journal-papers-currently-in-progress"><em>1 Journal papers currently in progress</em></h4>
+</div>
+</div>
+</section><section>
+<h2 id="publications-details">Publications details</h2>
+
+<div class="multiCol piccolo"><div class="col col-50 "><p><strong>Published</strong> <em>Workshop</em>:</p>
+<ul>
+<li>Baiardi M., et. al. (2023). Infrastructures for the Edge-Cloud Continuum on a Small Scale: A Practical Case Study. In: SISSY 2023, in conjunction with ACSOS 2023.</li>
+<li>Pianini D., et. al. (2024). Multi-Paradigm Integration for the BDI Resurgence. In: SISSY 2024, in conjunction with ACSOS 2024.</li>
+<li>Baiardi M., et. al. (2024). On the External Concurrency of Current BDI Frameworks for MAS. In: EMAS 2024, in conjunction with AAMAS 2024.</li>
+</ul>
+<p><strong>Published</strong> <em>Doctoral Symposium</em>:</p>
+<ul>
+<li>Baiardi M. (2024). Supporting Autonomic Computing via BDI Tooling. In: ACSOS 2024.</li>
+<li>Baiardi, M. (2023). A Step Forward to Widespread BDI AOP: JaKtA. In: EUMAS 2023.</li>
+<li>Baiardi, M. (2024). Validation of BDI MASs via Simulation. In: DS-RT 2024.</li>
+</ul>
+<p><strong>Published</strong> <em>Main Conference</em>:</p>
+<ul>
+<li>Baiardi M., et. al. (2023). JaKtA: BDI Agent-Oriented Programming in Pure Kotlin. In: EUMAS 2023.</li>
+<li>Grushchak D., et al. (2024). Decentralized Multi-Drone Coordination for Wildlife Video Acquisition. In: ACSOS 2024.</li>
+<li>Baiardi M., et. al. (2024). Concurrency Model of BDI Programming Frameworks: Why Should We Control It? In: AAMAS 2024.</li>
+</ul>
+<p><strong>Published</strong> <em>Journal</em>:</p>
+<ul>
+<li>Baiardi, M., et al. (2024). Blending BDI Agents with Object-Oriented and Functional Programming with JaKtA. IN: SN Computer Science.</li>
+</ul>
+<p><strong>Published</strong> <em>Book chapter</em>:</p>
+<ul>
+<li>Baiardi M., et. al. (2025). JaKtA: Better Tools for a Mainstream BDI. In: Agent Toolkits: Yesterday, Today and Tomorrow.</li>
+</ul>
+</div>
+<div class="col col-50 "><p><strong>Published</strong> <em>Tool papers</em>:</p>
+<ul>
+<li>Aguzzi G., et. al. (2025). A Demonstrator Toolchain for Self-organizing Robot Teams. In: Coordination 2025.</li>
+</ul>
+<p><strong>Accepted</strong> <em>Workshop</em>:</p>
+<ul>
+<li>Burattini S., Baiardi M., et al. (2025). The Gap Between BDI Agents and Semantic Hypermedia and What We Can Do About It. In: HyperAgents 2025 Workshop, in conjunction with ECAI 2025.</li>
+<li>Al-Falouji G., Baiardi M., et. al. (2025). CoMPass: A Roadmap to Collaborative perception and Autonomy in Maritime Systems. In: SISSY 2025 Workshop, in conjunction with ACSOS 2025.</li>
+</ul>
+<p><strong>Accepted</strong> <em>Main Conference</em>:</p>
+<ul>
+<li>Aguzzi G., Baiardi M., et. al. (2025). A Field-based Approach for Runtime Replanning in Swarm Robotics Missions. In: ACSOS 2025.</li>
+<li>Baiardi M., et. al. (2025). Robust Communication through Collective Adaptive Relay Schemes for Maritime Vessels. In: ACSOS 2025.</li>
+<li>Ciatto G., et. al. (2025). Exploiting GenAI for Plan Generation in BDI Agents. In: ECAI 2025.</li>
+</ul>
+<p><strong>Accepted</strong> <em>Doctoral Symposium</em>:</p>
+<ul>
+<li>Baiardi M. (2025). Cognitive Agents in the Field: an Hybrid Approach Between Agent-Oriented and Aggregate Computation. In: ACSOS 2025.</li>
+</ul>
+<p><strong>Under review</strong> <em>Journal</em>:</p>
+<ul>
+<li>Baiardi M., et al. (2025). Using Discrete Event Simulation to Test BDI Systems Before Deployment. In: Auton. Agents Multi Agent Syst.</li>
+</ul>
+<p><strong>In progress</strong> <em>Journal</em>:</p>
+<ul>
+<li>Baiardi M., et. al. (2025). Self-healing long-term maintenance of large-scale manufacturing machines.</li>
+</ul>
+</div>
+</div>
+</section>
+
+  
+
+
+</div>
+      
+
+    </div>
+<script type="text/javascript" src="/phd-2nd-year-slides/reveal-hugo/object-assign.js"></script>
+
+<a href="/phd-2nd-year-slides/reveal-js/dist/print/" id="print-location" style="display: none;"></a>
+
+<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"height":"1080","highlight_theme":"solarized-dark","history":true,"mermaid":[{}],"slide_number":true,"theme":"league","transition":"slide","transition_speed":"fast","width":"1920"}</script>
+<script type="application/json" id="reveal-hugo-page-params">null</script>
+
+<script src="/phd-2nd-year-slides/reveal-js/dist/reveal.js"></script>
+
+
+  
+  
+  <script type="text/javascript" src="/phd-2nd-year-slides/reveal-js/plugin/markdown/markdown.js"></script>
+  
+  <script type="text/javascript" src="/phd-2nd-year-slides/reveal-js/plugin/highlight/highlight.js"></script>
+  
+  <script type="text/javascript" src="/phd-2nd-year-slides/reveal-js/plugin/zoom/zoom.js"></script>
+  
+  <script type="text/javascript" src="/phd-2nd-year-slides/reveal-js/plugin/notes/notes.js"></script>
+  
+  
+  <script type="text/javascript" src="/phd-2nd-year-slides/reveal-js/plugin/notes/notes.js"></script>
+
+
+
+
+<script type="text/javascript">
+  
+  
+  function camelize(map) {
+    if (map) {
+      Object.keys(map).forEach(function(k) {
+        newK = k.replace(/(\_\w)/g, function(m) { return m[1].toUpperCase() });
+        if (newK != k) {
+          map[newK] = map[k];
+          delete map[k];
+        }
+      });
+    }
+    return map;
+  }
+
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+
+  var revealHugoPlugins = {
+    plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom ]
+   };
+  var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
+  var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
+  
+  var options = Object.assign({},
+    camelize(revealHugoDefaults),
+    camelize(revealHugoSiteParams),
+    camelize(revealHugoPageParams),
+    camelize(revealHugoPlugins));
+  Reveal.initialize(options);
+</script>
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+
+
+
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+</script>
+
+<script type="text/javascript" id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+<script>
+  if (/.*?(\?|&)print-pdf/.test(window.location.toString())) {
+      var ytVideos = document.getElementsByTagName("iframe")
+      for (let i = 0; i < ytVideos.length; i++) {
+          var videoFrame = ytVideos[i]
+          var isYouTube = /^https?:\/\/(www.)youtube\.com\/.*/.test(videoFrame.src)
+          if (isYouTube) {
+              console.log(`Removing ${videoFrame.src}`)
+              var parent = videoFrame.parentElement
+              videoFrame.remove()
+              var p = document.createElement('p')
+              p.append(
+                  document.createTextNode(
+                      "There was an embedded video here, but it is disabled in the printed version of the slides."
+                  )
+              )
+              p.append(document.createElement('br'))
+              p.append(
+                  document.createTextNode(
+                      `Visit instead ${
+                          videoFrame.src
+                      } or ${
+                          videoFrame.src.replace(
+                              /(^https?:\/\/(www.)youtube\.com)\/(embed\/)(\w+).*/,
+                              "https://www.youtube.com/watch?v=$4"
+                          )
+                      }`
+                  )
+              )
+              parent.appendChild(p)
+          }
+      }
+  }
+</script>
+
+
+    
+  
+
+</body></html>

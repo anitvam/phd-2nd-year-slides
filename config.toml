@@ -1,4 +1,4 @@
-baseURL = "https://anitvam.github.io/lehrstuhlklausur-2025"
+baseURL = "https://anitvam.github.io/phd-2nd-year-slides"
 languageCode = "en-us"
 title = "Software Engineering in the Edge-Cloud-Continuum"
 disableKinds = ["sitemap", "RSS"]
